@@ -6,7 +6,7 @@
 
 ## console.trace()
 
-<console/>
+<v-custom-console/>
 
 Each markdown file is first compiled into HTML and then rendered as a Vue component. This means you can use Vue-style interpolation in text:
 

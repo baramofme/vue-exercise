@@ -12735,12 +12735,22 @@ vue-compile@^0.3.1:
     stringify-attributes "^1.0.0"
     vue-template-compiler "^2.5.17"
 
+vue-conso@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/vue-conso/-/vue-conso-0.2.2.tgz#d093d249c170af6ad2749ed743e2a23df4e95698"
+  integrity sha512-T6IziPjdQlfaZcgeNvjvgU4SG0ag1HRWR1kmecUZfYEUY+2VaXucM+mxiasxG/5ku7M/Wx3uHCFpGbeORxF2+w==
+
 vue-content-loader@^0.2.1:
   version "0.2.1"
   resolved "https://registry.npmjs.org/vue-content-loader/-/vue-content-loader-0.2.1.tgz#0eb332e2a72643d57fb209d72d6526573b191f5a"
   integrity sha1-DrMy4qcmQ9V/sgnXLWUmVzsZH1o=
   dependencies:
     babel-helper-vue-jsx-merge-props "^2.0.3"
+
+vue-custom-console@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/vue-custom-console/-/vue-custom-console-1.0.4.tgz#cd493ebe395ba811b8e7446adbffbe54687452ec"
+  integrity sha512-x9KEn7pn8OeUaN0xUbUfkp8ldZD8wEUFVA1CJtzHz+Isr2B3sDDuZ0AHT0QhaM0UWaHUCNN5RlisTf96YPwnYA==
 
 vue-eslint-parser@^4.0.2:
   version "4.0.3"

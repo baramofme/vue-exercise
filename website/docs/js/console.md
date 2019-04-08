@@ -6,9 +6,8 @@
 
 ## console.trace()
 
-<console/>
+어디서부터 지금의 실행이 시작 되었는지 보려면 `console.trace()`.
 
-Each markdown file is first compiled into HTML and then rendered as a Vue component. This means you can use Vue-style interpolation in text:
 
 __Input__:
 

@@ -3,9 +3,18 @@ import googleAnalytics from 'docute-google-analytics'
 import Docute from 'docute'
 import prismLanguages from 'docute/lib/utils/prismLanguages'
 import ColorBox from './components/ColorBox.vue'
-import {versions, navs, sidebars, overrides} from './infos/infos.js'
+import {versions, navs, sidebars, overrides} from './infos.js'
 import docuteMermaid from 'docute-mermaid'
 
+
+// Apply Vue.js plugins
+import Vue from 'vue';
+import Console from 'vue-custom-console'
+var { Conso } = require('vue-conso')
+Vue.use(Console)
+Vue.component('conso',Conso)
+
+// Apply mermaid plugins dependency
 // add mermaid before docute-mermaid plugins loaded
 window.mermaid = require('mermaid');
 
@@ -56,7 +65,8 @@ new Docute({
         }
       },
       components: {
-        ColorBox
+        ColorBox,
+        Console
       }
     }
   ],
