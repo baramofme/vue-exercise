@@ -4,6 +4,10 @@ import Docute from 'docute'
 import prismLanguages from 'docute/lib/utils/prismLanguages'
 import ColorBox from './components/ColorBox.vue'
 import {versions, navs, sidebars, overrides} from './infos/infos.js'
+import docuteMermaid from 'docute-mermaid'
+
+// add mermaid before docute-mermaid plugins loaded
+window.mermaid = require('mermaid');
 
 new Docute({
   target: 'app',
@@ -12,6 +16,7 @@ new Docute({
   highlight: ['typescript', 'bash', 'json', 'markdown'],
   plugins: [
     // process.env.NODE_ENV === 'production' && googleAnalytics('UA-54857209-11')
+    docuteMermaid() // add mermaid support plugin
   ].filter(Boolean),
   editLinkBase: 'https://github.com/baramofme/vue-exercise/tree/master/website/docs',
   editLinkText: 'GitHub 에서 수정하기',
