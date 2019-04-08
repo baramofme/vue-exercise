@@ -3,17 +3,18 @@ import googleAnalytics from 'docute-google-analytics'
 import Docute from 'docute'
 import prismLanguages from 'docute/lib/utils/prismLanguages'
 import ColorBox from './components/ColorBox.vue'
+import {versions, navs, sidebars, overrides} from './infos/infos.js'
 
 new Docute({
   target: 'app',
-  title: 'Docute',
+  title: 'Personal Vue.js Exercise',
   layout: 'wide',
   highlight: ['typescript', 'bash', 'json', 'markdown'],
   plugins: [
-    process.env.NODE_ENV === 'production' && googleAnalytics('UA-54857209-11')
+    // process.env.NODE_ENV === 'production' && googleAnalytics('UA-54857209-11')
   ].filter(Boolean),
-  editLinkBase: 'https://github.com/egoist/docute/tree/master/website/docs',
-  editLinkText: 'Edit this page on GitHub',
+  editLinkBase: 'https://github.com/baramofme/vue-exercise/tree/master/website/docs',
+  editLinkText: 'GitHub 에서 수정하기',
   router: {
     mode: 'history'
   },
@@ -54,182 +55,24 @@ new Docute({
       }
     }
   ],
-  versions: {
-    'v4 (Latest)': {
-      link: '/'
-    },
-    v3: {
-      link: 'https://v3.docute.org'
-    }
-  },
-  nav: [
-    {
-      title: 'Home',
-      link: '/'
-    },
-    {
-      title: 'GitHub',
-      link: 'https://github.com/egoist/docute'
-    }
-  ],
-  sidebar: [
-    {
-      title: 'Guide',
-      links: [
-        {
-          title: 'Customization',
-          link: '/guide/customization'
-        },
-        {
-          title: 'Markdown Features',
-          link: '/guide/markdown-features'
-        },
-        {
-          title: 'Use Vue in Markdown',
-          link: '/guide/use-vue-in-markdown'
-        },
-        {
-          title: 'Internationalization',
-          link: '/guide/internationalization'
-        },
-        {
-          title: 'Plugin',
-          link: '/guide/plugin'
-        },
-        {
-          title: 'Deployment',
-          link: '/guide/deployment'
-        }
-      ]
-    },
-    {
-      title: 'Advanced',
-      links: [
-        {
-          title: 'Use With Bundlers',
-          link: '/guide/use-with-bundlers'
-        },
-        {
-          title: 'Offline Support',
-          link: '/guide/offline-support'
-        }
-      ]
-    },
-    {
-      title: 'References',
-      links: [
-        {
-          title: 'Options',
-          link: '/options'
-        },
-        {
-          title: 'Built-in Components',
-          link: '/builtin-components'
-        },
-        {
-          title: 'Plugin API',
-          link: '/plugin-api'
-        }
-      ]
-    },
-    {
-      title: 'Misc',
-      links: [
-        {
-          title: 'Credits',
-          link: '/credits'
-        }
-      ]
-    }
-  ],
+  // no version use
+  // versions: versions,
+
+  nav: navs.main,
+  sidebar: sidebars.main,
+
   overrides: {
+    // this only needs override default root router's language variable.
     '/': {
-      language: 'English'
+      language: '한국어',
+      // other props already defined upper sources
     },
-    '/zh/': {
-      language: 'Chinese',
-      editLinkText: '在 GitHub 上编辑此页',
-      nav: [
-        {
-          title: '首页',
-          link: '/zh/'
-        },
-        {
-          title: 'GitHub',
-          link: 'https://github.com/egoist/docute'
-        }
-      ],
-      sidebar: [
-        {
-          title: '指南',
-          links: [
-            {
-              title: '自定义',
-              link: '/zh/guide/customization'
-            },
-            {
-              title: 'Markdown 功能',
-              link: '/zh/guide/markdown-features'
-            },
-            {
-              title: '在 Markdown 中使用 Vue',
-              link: '/zh/guide/use-vue-in-markdown'
-            },
-            {
-              title: '国际化',
-              link: '/zh/guide/internationalization'
-            },
-            {
-              title: '插件',
-              link: '/zh/guide/plugin'
-            },
-            {
-              title: '部署',
-              link: '/zh/guide/deployment'
-            }
-          ]
-        },
-        {
-          title: '进阶',
-          links: [
-            {
-              title: '使用打包工具',
-              link: '/zh/guide/use-with-bundlers'
-            },
-            {
-              title: '离线支持',
-              link: '/zh/guide/offline-support'
-            }
-          ]
-        },
-        {
-          title: '参考',
-          links: [
-            {
-              title: '配置项',
-              link: '/zh/options'
-            },
-            {
-              title: '内置组件',
-              link: '/zh/builtin-components'
-            },
-            {
-              title: '插件 API',
-              link: '/zh/plugin-api'
-            }
-          ]
-        },
-        {
-          title: '其它',
-          links: [
-            {
-              title: '致谢',
-              link: '/zh/credits'
-            }
-          ]
-        }
-      ]
-    }
+    '/en/': {
+      language: overrides.en.language,
+      editLinkText: overrides.en.editLinkText,
+      nav: navs.en,
+      sidebar: sidebars.en,
+    },
   },
   footer: ``,
   //   `
