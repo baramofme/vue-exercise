@@ -13,6 +13,21 @@ import Console from 'vue-custom-console'
 var { Conso } = require('vue-conso')
 Vue.use(Console)
 Vue.component('conso',Conso)
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.css';
+import colors from 'vuetify/es5/util/colors'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
+Vue.use(Vuetify, {
+  theme: {
+    primary: colors.purple,
+      secondary: colors.grey.darken1,
+      accent: colors.shades.black,
+      error: colors.red.accent3
+  }
+})
+
+// Css override
+
 
 // Apply mermaid plugins dependency
 // add mermaid before docute-mermaid plugins loaded
@@ -34,6 +49,7 @@ new Docute({
   },
   darkThemeToggler: true,
   sourcePath: '/',
+  // cssVariables: vuetifyCss,
   componentMixins: [
     {
       data() {
@@ -61,6 +77,30 @@ new Docute({
             }
             `
             document.head.appendChild(style)
+          }
+        },
+        insertVuetifyIcon(){
+          const ID = 'vuetify-icon-css'
+          const existing = document.getElementById(ID)
+          if (existing) {
+            existing.parentNode.removeChild(existing)
+          } else {
+            const link = document.createElement('link')
+            link.href = "https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons"
+            link.rel = "stylesheet"
+            document.head.appendChild(link)
+          }
+        },
+        insertVuetifyCss(){
+          const ID = 'vuetify-base-css'
+          const existing = document.getElementById(ID)
+          if (existing) {
+            existing.parentNode.removeChild(existing)
+          } else {
+            const link = document.createElement('link')
+            link.href = "https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css"
+            link.rel = "stylesheet"
+            document.head.appendChild(link)
           }
         }
       },

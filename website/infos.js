@@ -54,6 +54,19 @@ export const sidebars = {
         },
       ]
     },
+    {
+      title: '키우기',
+      links: [
+        // {
+        //   title: '목록',
+        //   link: '/incuvate/'
+        // },
+        {
+          title: '실비보험 청구 노트',
+          link: '/incuvate/casualty-insurance-claim-note.md'
+        },
+      ]
+    },
   ],
   en: [
   //   {
