@@ -65,6 +65,10 @@ export const sidebars = {
           title: '실비보험 청구 노트',
           link: '/incuvate/casualty-insurance-claim-note.md'
         },
+        {
+          title: '러브필드 퀵스타트',
+          link: '/incuvate/lovefield-quick-start.md'
+        },
       ]
     },
   ],
