@@ -63,11 +63,11 @@ export const sidebars = {
         // },
         {
           title: '실비보험 청구 노트',
-          link: '/incuvate/casualty-insurance-claim-note.md'
+          link: '/incuvate/casualty-insurance-claim-note'
         },
         {
           title: '생리주기 어플 클론',
-          link: '/incuvate/menstruation-diary-clone.md'
+          link: '/incuvate/menstruation-diary-clone'
         },
       ]
     },
@@ -80,7 +80,7 @@ export const sidebars = {
         // },
         {
           title: '러브필드 퀵스타트',
-          link: '/library/lovefield-quick-start.md'
+          link: '/library/lovefield-quick-start'
         },
       ]
     },

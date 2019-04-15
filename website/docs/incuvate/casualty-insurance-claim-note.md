@@ -113,12 +113,181 @@ ovenapp.io 같은 프로토 타이핑 툴로 먼저 기획을 만드는 게 좋�
     - pouchDB 고려했으나 `no-sql` 에서 조인을 어떻게 하는 지를 생각하니 두려워서 안 하게 됐다.
 - 몇 가지 예시
   - 로컬 스토리지 조회/저장/삭제
-  - ~~러브필드(indexedDB 래퍼) 조회/저장/삭제~~
+  - 러브필드(indexedDB 래퍼) 조회/저장/삭제
 
-<embed src="https://codesandbox.io/embed/jvwmo587n9?autoresize=1&fontsize=14" width="100%">
+<embed src="https://codesandbox.io/embed/jvwmo587n9?autoresize=1&fontsize=14" width="100%" height="768px">
 
 약간 구린 건, 2차 `<router-view />` 부터는 타입스크립트 모듈 인식을 못해서 그곳에 보여질 컴포넌트는 바닐라 vuejs 형식으로
 작성을 해야한다. 이것때문에 고문당하는 느낌으로 "왜 안 돼?" 모드로 또 인생을 갈아넣었다.
 
+### 데이터 구조 잡기
 
+내가 임의로 정한 데이터 구조가 아니라, 가급적 공통으로 사용되는 데이터가 좋다.
 
+국민건강보험에서 `진료받은 내용 조회` 하면 나오는 정보 먼저 보자.
+
+```js
+[
+ {
+   "번호": "42",
+   "병·의원(약국)명칭": "고려대학교의과대학부속구로병원[구로구 구로동로]",
+   "진료개시일": "2016.01.12",
+   "진료형태": "일반외래",
+   "처방회수": 1,
+   "본인부담금": "19,300",
+   "청구여부": false
+ },
+]
+```
+
+보험 청구 앱에서는 다음처럼 표현한다.
+
+![](https://lh3.googleusercontent.com/NvVbY_nXALV8KzH1_3lMCWLo2mJQYuzQJ4yoq5deMwlouifnh-9An6KO5Ds_uUoFMTRlgIaMZoATKXpkZc5iYFOYTMekXyay1kfNFQ6MNzVFXFjkt3LiMIAV7s66r6rVwnTiXokjMpVmLa9tNxczm1zuJ_18QMq-25k86_QYT56F3LokaihaXfstOuHboMk531_ZP9S3-J-zCyaZ-GjWfXiMkaDKq9XkBrA9JpvffI9SbPmYaJw0s8NreFd25s3-H0AkCLmRiW-JNlB9uy4hDyZ-0VkcRMXpKoHX_imRbeDcnOkD3vcKnMizQd_NwGdxLkRFYxqDiumV99QNCKfGJZvj08XVEX4F5eV84T_vsq-bNQT_6nRyP3Yj5DnalEybMX4v_MwCEI_mcFRxxCFRaz5m-e81FFM2iwC-c9lpshx6MIL7bAOiigHfO-swemq3dERkGgFzEtXm9q2tZJ2qOn6GhLZNqU8ClVgn8z5MZiOGD2YabjgO2gXhKk43tPz1tc3SkAofWbZ54CnirOn9TniIAaCvnnNvPlYQUSTwGP4E261ql-sbSOZ3p5vintU9qh-A2tsFDrhKrh3N5pThq7QOFTggruwKkFoFaKfmof5fThuzkoMG4qieJJz9bWbl5uP4ur4cEk-SVpnzH_MwvpNfkZ9AcvQ=w852-h1515-no)
+
+내 필요는 청구되고 안 되고가 아니라 청구 됐음/안됐음 여부다.
+
+<v-app>
+    <v-data-table
+      :headers="headers"
+      :items="desserts"
+      class="elevation-1"
+    >
+      <template v-slot:items="props">
+        <td>{{ props.item["번호"] }}</td>
+<td class="text-xs-right">{{ props.item["청구여부"] }}</td>        
+<td class="text-xs-right">{{ props.item["병·의원(약국)명칭"] }}</td>
+        <td class="text-xs-right">{{ props.item["진료개시일"] }}</td>
+        <td class="text-xs-right">{{ props.item["진료형태"] }}</td>
+        <td class="text-xs-right">{{ props.item["처방회수"] }}</td>
+        <td class="text-xs-right">{{ props.item["본인부담금"] }}</td>
+      </template>
+    </v-data-table>
+</v-app>
+
+<v-style>
+.application--wrap{
+    min-height: auto;
+}
+</v-style>
+
+```js {mixin:true}
+{
+    data () {
+      return {
+        headers: [
+          {
+            text: '번호',
+            align: 'left',
+            sortable: false,
+            value: '번호'
+          },
+          { text: '청구여부', value: '청구여부' },
+          { text: "병·의원(약국)명칭", value: "병·의원(약국)명칭" },
+          { text: '진료개시일', value: '진료개시일' },
+          { text: '진료형태', value: '진료형태' },
+          { text: '처방회수', value: '처방회수' },
+          { text: '본인부담금', value: '본인부담금' }
+        ],
+        desserts: [
+                   {
+                     "번호": "42",
+                     "병·의원(약국)명칭": "고려대학교의과대학부속구로병원[구로구 구로동로]",
+                     "진료개시일": "2016.01.10",
+                     "진료형태": "일반외래",
+                     "처방회수": 1,
+                     "본인부담금": "19,300",
+                     "청구여부": false
+                   },
+     
+                   {
+                     "번호": "41",
+                     "병·의원(약국)명칭": "후문약국[구로구 가마산로]",
+                     "진료개시일": "2016.01.11",
+                     "진료형태": "처방조제",
+                     "처방회수": 1,
+                     "본인부담금": "69,000",
+                     "청구여부": false
+                   },
+                   {
+                     "번호": "40",
+                     "병·의원(약국)명칭": "바른병원[영등포구 여의대방로]",
+                     "진료개시일": "2016.01.12",
+                     "진료형태": "일반외래",
+                     "처방회수": 0,
+                     "본인부담금": "3,700",
+                     "청구여부": false
+                   },
+                   {
+                     "번호": "39",
+                     "병·의원(약국)명칭": "고려대학교의과대학부속구로병원[구로구 구로동로]",
+                     "진료개시일": "2016.01.11",
+                     "진료형태": "일반입원",
+                     "처방회수": 0,
+                     "본인부담금": "88,830",
+                     "청구여부": false
+                   },
+                   {
+                     "번호": "38",
+                     "병·의원(약국)명칭": "바른병원[영등포구 여의대방로]",
+                     "진료개시일": "2016.01.13",
+                     "진료형태": "일반입원",
+                     "처방회수": 0,
+                     "본인부담금": "185,030",
+                     "청구여부": false
+                   },
+                   {
+                     "번호": "37",
+                     "병·의원(약국)명칭": "바른병원[영등포구 여의대방로]",
+                     "진료개시일": "2016.01.14",
+                     "진료형태": "일반외래",
+                     "처방회수": 0,
+                     "본인부담금": "5,400",
+                     "청구여부": false
+                   },
+
+                   {
+                     "번호": "36",
+                     "병·의원(약국)명칭": "고려대학교의과대학부속구로병원[구로구 구로동로]",
+                     "진료개시일": "2019.01.04",
+                     "진료형태": "일반외래",
+                     "처방회수": 0,
+                     "본인부담금": "53,800",
+                     "청구여부": false
+                   },
+                   {
+                     "번호": "35",
+                     "병·의원(약국)명칭": "바른병원[영등포구 여의대방로]",
+                     "진료개시일": "2019.01.06",
+                     "진료형태": "일반외래",
+                     "처방회수": 0,
+                     "본인부담금": "3,700",
+                     "청구여부": false
+                   },
+                   {
+                     "번호": "34",
+                     "병·의원(약국)명칭": "바른병원[영등포구 여의대방로]",
+                     "진료개시일": "2018.12.31",
+                     "진료형태": "일반외래",
+                     "처방회수": 0,
+                     "본인부담금": "3,700",
+                     "청구여부": false
+                   },
+                   {
+                     "번호": "33",
+                     "병·의원(약국)명칭": "바른병원[영등포구 여의대방로]",
+                     "진료개시일": "2018.12.29",
+                     "진료형태": "일반외래",
+                     "처방회수": 0,
+                     "본인부담금": "6,700",
+                     "청구여부": false
+                   },
+                  ]
+      }
+    }
+  }
+
+```
+
+그럼 실제로 보험사 청구 접수 정보는 어떻게 할까? 요것도 이미 앱에 있다.
+
+~[](https://lh3.googleusercontent.com/sFb4etJ5hP9eChNZqgGW1nFkoA5z3QszhHPg1njViO04SVTUoVKNpLGPOfTkBB4TQriu4KcLUNxteihZd1LV2uR5Fp8yOAoEEx5LKkqB1gKiHbOswE7uXYANXMV6jPbhwLVnTIhYRnQlERiZMhGyKMkDHO0eX9lKYYvT2HZhQHKqcgQQQeUSJqlQzhEqKO7-BV3ieZomK7FuOAdUP4Xpf2cVxfL-_L2oJzZ_u4vxAz0lL0lR3F2y6rTif9_EJVB_F6om3ennQSBl97HJjL8u6lrw9f0SYQ2fHdXf8PHemsoaWAh2AnR0gmcgm_nQwD2t8R41hzoCWV9R7heqRhpk_DMdmgpAxb_6o9A50Gnnq_GnJDnNobI9sh_dLKUWzL8tVn0UaeGkZ0KYlEHUXN9SnZWpzLvSfqt8jvshUL5rNk-zWeP7tC4A3mm3507F7pYs1TZr2IRn-grxRzLmbPcfjqMHwAp8pW2CgmNqmNGreYjA1J_5gdzm2pKe8CbH3lztAbgHrxwFfJO_hrNT00rQzRNjjYWHxBmpr3iKPDxY4Db8r0Gq8zm0uhZ4AuXLXdxBlD0J0as67NctCAuP6ZeFQ8fow0kb8ejNgnxlGvB5sx3Q69R72jfvwwIdzAwFUgi6gCueSolSNWsE97njrDxI7zZ6-8Kr9iw=w893-h1587-no)
