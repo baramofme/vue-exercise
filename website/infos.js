@@ -65,9 +65,18 @@ export const sidebars = {
           title: '실비보험 청구 노트',
           link: '/incuvate/casualty-insurance-claim-note.md'
         },
+      ]
+    },
+    {
+      title: '라이브러리',
+      links: [
+        // {
+        //   title: '목록',
+        //   link: '/incuvate/'
+        // },
         {
           title: '러브필드 퀵스타트',
-          link: '/incuvate/lovefield-quick-start.md'
+          link: '/library/lovefield-quick-start.md'
         },
       ]
     },
