@@ -25,6 +25,8 @@
     "mermaid": "^8.0.0",
     "prismjs": "^1.15.0",
     "stylus-loader": "^3.0.2",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.4.2",
     "vue": "^2.6.10",
     "vue-conso": "^0.2.2",
     "vue-content-loader": "^0.2.1",

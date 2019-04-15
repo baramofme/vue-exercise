@@ -65,6 +65,10 @@ export const sidebars = {
           title: '실비보험 청구 노트',
           link: '/incuvate/casualty-insurance-claim-note.md'
         },
+        {
+          title: '생리주기 어플 클론',
+          link: '/incuvate/menstruation-diary-clone.md'
+        },
       ]
     },
     {
