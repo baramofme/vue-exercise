@@ -128,41 +128,108 @@ ovenapp.io 같은 프로토 타이핑 툴로 먼저 기획을 만드는 게 좋�
 
 ```js
 [
- {
-   "번호": "42",
-   "병·의원(약국)명칭": "고려대학교의과대학부속구로병원[구로구 구로동로]",
-   "진료개시일": "2016.01.12",
-   "진료형태": "일반외래",
-   "처방회수": 1,
-   "본인부담금": "19,300",
-   "청구여부": false
- },
-]
+  {
+    "번호": "42",
+    "병·의원(약국)명칭": "고려대학교의과대학부속구로병원[구로구 구로동로]",
+    "진료개시일": "2016.01.12",
+    "진료형태": "일반외래",
+    "처방회수": 1,
+    "본인부담금": "19,300",
+    "청구여부": false
+  },
+ ]
 ```
 
 보험 청구 앱에서는 다음처럼 표현한다.
 
 ![](https://lh3.googleusercontent.com/NvVbY_nXALV8KzH1_3lMCWLo2mJQYuzQJ4yoq5deMwlouifnh-9An6KO5Ds_uUoFMTRlgIaMZoATKXpkZc5iYFOYTMekXyay1kfNFQ6MNzVFXFjkt3LiMIAV7s66r6rVwnTiXokjMpVmLa9tNxczm1zuJ_18QMq-25k86_QYT56F3LokaihaXfstOuHboMk531_ZP9S3-J-zCyaZ-GjWfXiMkaDKq9XkBrA9JpvffI9SbPmYaJw0s8NreFd25s3-H0AkCLmRiW-JNlB9uy4hDyZ-0VkcRMXpKoHX_imRbeDcnOkD3vcKnMizQd_NwGdxLkRFYxqDiumV99QNCKfGJZvj08XVEX4F5eV84T_vsq-bNQT_6nRyP3Yj5DnalEybMX4v_MwCEI_mcFRxxCFRaz5m-e81FFM2iwC-c9lpshx6MIL7bAOiigHfO-swemq3dERkGgFzEtXm9q2tZJ2qOn6GhLZNqU8ClVgn8z5MZiOGD2YabjgO2gXhKk43tPz1tc3SkAofWbZ54CnirOn9TniIAaCvnnNvPlYQUSTwGP4E261ql-sbSOZ3p5vintU9qh-A2tsFDrhKrh3N5pThq7QOFTggruwKkFoFaKfmof5fThuzkoMG4qieJJz9bWbl5uP4ur4cEk-SVpnzH_MwvpNfkZ9AcvQ=w852-h1515-no)
 
-내 필요는 청구되고 안 되고가 아니라 청구 됐음/안됐음 여부다.
+내 필요는 청구 여부 뿐 아니라, 접수 및 지급 여부 까지.
 
+```js
+[
+  {
+    "번호": "11",
+    "병·의원(약국)명칭": "고려대학교의과대학부속구로병원[구로구 구로동로]",
+    "진료개시일": "2016.01.12",
+    "진료형태": "일반외래",
+    "처방회수": 1,
+    "본인부담금": "19,300",
+    "청구": false,
+    "접수": false,
+    "지급": false,
+  },
+ ]
+```
+
+그럼 실제로 보험사 청구 접수 정보는 어떻게 할까? 요것도 이미 앱에 있다.
+
+![](https://lh3.googleusercontent.com/sFb4etJ5hP9eChNZqgGW1nFkoA5z3QszhHPg1njViO04SVTUoVKNpLGPOfTkBB4TQriu4KcLUNxteihZd1LV2uR5Fp8yOAoEEx5LKkqB1gKiHbOswE7uXYANXMV6jPbhwLVnTIhYRnQlERiZMhGyKMkDHO0eX9lKYYvT2HZhQHKqcgQQQeUSJqlQzhEqKO7-BV3ieZomK7FuOAdUP4Xpf2cVxfL-_L2oJzZ_u4vxAz0lL0lR3F2y6rTif9_EJVB_F6om3ennQSBl97HJjL8u6lrw9f0SYQ2fHdXf8PHemsoaWAh2AnR0gmcgm_nQwD2t8R41hzoCWV9R7heqRhpk_DMdmgpAxb_6o9A50Gnnq_GnJDnNobI9sh_dLKUWzL8tVn0UaeGkZ0KYlEHUXN9SnZWpzLvSfqt8jvshUL5rNk-zWeP7tC4A3mm3507F7pYs1TZr2IRn-grxRzLmbPcfjqMHwAp8pW2CgmNqmNGreYjA1J_5gdzm2pKe8CbH3lztAbgHrxwFfJO_hrNT00rQzRNjjYWHxBmpr3iKPDxY4Db8r0Gq8zm0uhZ4AuXLXdxBlD0J0as67NctCAuP6ZeFQ8fow0kb8ejNgnxlGvB5sx3Q69R72jfvwwIdzAwFUgi6gCueSolSNWsE97njrDxI7zZ6-8Kr9iw=w893-h1587-no)
+
+이것을 바꾸자면 다음과 같을 듯?
+
+```js
+[
+  {
+    "번호": "11",
+    "사고유형": "질병", // 질병 || 상해
+    "사고일자": "2016.01.12",
+    "병원/약국명": "00약국",
+    "다녀온 이유": '감기',
+    "자동이체 계좌로 입금받기": "Yes", // Yes || No
+    "청구인": "홍길동",
+    "담당자": "000",
+    "담당자 연락처": "000",
+    "서류": ""
+  },
+ ]
+```
+
+보니까. 나는 한꺼번에 3~4개 씩 팩스로 접수한 뒤에 보험사 지급 내역은 딸랑 한 장 나오는 게 빡쳤는데, 
+앱은 무조건 1 영수증 1 지급서다. 보험사쪽 서류가 무성의 하니 그걸 따질 빌미를 안 주고 1:! 매칭.
+
+음, 나처럼 귀찮은 사람은 건건이 안하고 통으로 하는데, 음... 일단 앱에서는 통으로 몇 건씩 한꺼번에 접수하는 기능은 없다.
+
+그럼 대세를 따르자. 보험사에 직접 요청한 서류조차 그날 접수한 개별 영수증 세부 보상 내역이 없었으니 그게 맞을 거 같음.
+
+그리고 이렇게 하면, 애당초 말한 관계형 DB 가 필요 없다. 엑셀로 따지면 한 줄에 모든 정보가 다 들어가니 PouchDB 와 같은 NO-SQL 써도 됨.
+
+음. 이 앱의 한계점이라면, 오늘부터 2개월 까지의 내역은 나오지 않고 따라서 접수도 불가능하다.
+
+이건 보험사가 좋은 일. 나는 돈이 회전이 안 되는 거고.
+
+따라서, 원래대로라면 국민건강보험 페이지에서 조회한 내역만 가져와야 하는 거지만, 유사한 형태의 내역을 입력할 수도 있어야 한다.
+ 
+<div>
 <v-app>
     <v-data-table
       :headers="headers"
       :items="desserts"
-      class="elevation-1"
+      :expand="expand"
+            item-key="번호"
     >
       <template v-slot:items="props">
+      <tr @click="props.expanded = !props.expanded">
         <td>{{ props.item["번호"] }}</td>
-<td class="text-xs-right">{{ props.item["청구여부"] }}</td>        
-<td class="text-xs-right">{{ props.item["병·의원(약국)명칭"] }}</td>
-        <td class="text-xs-right">{{ props.item["진료개시일"] }}</td>
-        <td class="text-xs-right">{{ props.item["진료형태"] }}</td>
-        <td class="text-xs-right">{{ props.item["처방회수"] }}</td>
-        <td class="text-xs-right">{{ props.item["본인부담금"] }}</td>
-      </template>
+          <td class="text-xs-right">{{ props.item["청구여부"] }}</td>        
+          <td class="text-xs-right">{{ props.item["병·의원(약국)명칭"] }}</td>
+          <td class="text-xs-right">{{ props.item["진료개시일"] }}</td>
+          <td class="text-xs-right">{{ props.item["진료형태"] }}</td>
+          <td class="text-xs-right">{{ props.item["처방회수"] }}</td>
+          <td class="text-xs-right">{{ props.item["본인부담금"] }}</td>
+        </tr>
+        </template>
+       <template v-slot:expand="props">
+                    <td class="text-xs-right">{{ props.item["번호"] }}</td>        
+                    <td class="text-xs-right">{{ props.item["사고유형"] }}</td>
+                    <td class="text-xs-right">{{ props.item["사고일자"] }}</td>
+                    <td class="text-xs-right">{{ props.item["병원/약국명"] }}</td>
+                    <td class="text-xs-right">{{ props.item["다녀온 이유"] }}</td>
+                    <td class="text-xs-right">{{ props.item["담당자"] }}</td>
+       </template>
     </v-data-table>
 </v-app>
+</div>
 
 <v-style>
 .application--wrap{
@@ -174,6 +241,7 @@ ovenapp.io 같은 프로토 타이핑 툴로 먼저 기획을 만드는 게 좋�
 {
     data () {
       return {
+      expand: false,
         headers: [
           {
             text: '번호',
@@ -186,7 +254,8 @@ ovenapp.io 같은 프로토 타이핑 툴로 먼저 기획을 만드는 게 좋�
           { text: '진료개시일', value: '진료개시일' },
           { text: '진료형태', value: '진료형태' },
           { text: '처방회수', value: '처방회수' },
-          { text: '본인부담금', value: '본인부담금' }
+          { text: '본인부담금', value: '본인부담금' },
+         
         ],
         desserts: [
                    {
@@ -196,7 +265,17 @@ ovenapp.io 같은 프로토 타이핑 툴로 먼저 기획을 만드는 게 좋�
                      "진료형태": "일반외래",
                      "처방회수": 1,
                      "본인부담금": "19,300",
-                     "청구여부": false
+                     "청구여부": false,
+                         "번호": "11",
+                         "사고유형": "질병", // 질병 || 상해
+                         "사고일자": "2016.01.12",
+                         "병원/약국명": "00약국",
+                         "다녀온 이유": '감기',
+                         "자동이체 계좌로 입금받기": "Yes", // Yes || No
+                         "청구인": "홍길동",
+                         "담당자": "000",
+                         "담당자 연락처": "000",
+                         "서류": ""
                    },
      
                    {
@@ -288,6 +367,20 @@ ovenapp.io 같은 프로토 타이핑 툴로 먼저 기획을 만드는 게 좋�
 
 ```
 
-그럼 실제로 보험사 청구 접수 정보는 어떻게 할까? 요것도 이미 앱에 있다.
+데이터 구조 잡기 결론:
 
-~[](https://lh3.googleusercontent.com/sFb4etJ5hP9eChNZqgGW1nFkoA5z3QszhHPg1njViO04SVTUoVKNpLGPOfTkBB4TQriu4KcLUNxteihZd1LV2uR5Fp8yOAoEEx5LKkqB1gKiHbOswE7uXYANXMV6jPbhwLVnTIhYRnQlERiZMhGyKMkDHO0eX9lKYYvT2HZhQHKqcgQQQeUSJqlQzhEqKO7-BV3ieZomK7FuOAdUP4Xpf2cVxfL-_L2oJzZ_u4vxAz0lL0lR3F2y6rTif9_EJVB_F6om3ennQSBl97HJjL8u6lrw9f0SYQ2fHdXf8PHemsoaWAh2AnR0gmcgm_nQwD2t8R41hzoCWV9R7heqRhpk_DMdmgpAxb_6o9A50Gnnq_GnJDnNobI9sh_dLKUWzL8tVn0UaeGkZ0KYlEHUXN9SnZWpzLvSfqt8jvshUL5rNk-zWeP7tC4A3mm3507F7pYs1TZr2IRn-grxRzLmbPcfjqMHwAp8pW2CgmNqmNGreYjA1J_5gdzm2pKe8CbH3lztAbgHrxwFfJO_hrNT00rQzRNjjYWHxBmpr3iKPDxY4Db8r0Gq8zm0uhZ4AuXLXdxBlD0J0as67NctCAuP6ZeFQ8fow0kb8ejNgnxlGvB5sx3Q69R72jfvwwIdzAwFUgi6gCueSolSNWsE97njrDxI7zZ6-8Kr9iw=w893-h1587-no)
+1. 의료기관 방문 내역을 입력할 수 있다. 
+  - 입원 때문에 기간 필드는 두 개가 필요하다.
+  - 기본 정보 : 영수증번호(pk), 병원/약국 이름, 병원/약국 종류, 외래/입원(퇴원,중간), 공유-최초사고일시, 공유-최초접수일, 최종-접수일 , 보상처리일 
+  - 항목 정보 : 진찰료, 검사료, 응급의학관리료 등
+  - 금액 정보 : 납부금액, 급여본인부담액,비급여금액, 지급금액
+  - 청구가능 : 가능,불가능
+  - 접수 상태 : 미처리, 진행, 완료
+  - (공유)보상처리 상태 : 미처리, 진행 , 완료
+ 
+2. 보상처리내역 입력할 수 있다.
+  - 기본정보 : 보상구분 - 상해/질병, 접수번호, 
+  - 보상접수 내용 - 질병/기타질환, 질병/심질환, 질병/기타질환
+  - (공유)최종접수일시, 사고일시, 
+  - 보상처리 상태 : 미처리, 진행, 완료
+ - 담장자, 처리일, 보험상품, 보상담보, 지급보험금, 지금합계, 은행명, 은행계좌
